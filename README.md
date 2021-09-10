@@ -1,1 +1,1 @@
-# Module 2 Part 1: Gallery
+# Module 2 Part 2: Gallery Server
