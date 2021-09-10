@@ -11,7 +11,7 @@ type LoginResponse = {
   'total': number
 }
 
-function getGallery(req: any): LoginResponse {
+function displayGallery(req: any): LoginResponse {
   if (req.headers.authorization === 'token') {
     const total: number = fs.readdirSync('./server/gallery/img').length.toString();
     const galleryURL = new URL(req.url, 'http://127.0.0.1:2000/');
@@ -38,6 +38,6 @@ function getGallery(req: any): LoginResponse {
   };
 }
 
-module.exports.getGallery = getGallery;
+module.exports.displayGallery = displayGallery;
 
 // Infinity load

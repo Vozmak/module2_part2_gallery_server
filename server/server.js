@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http = require('http');
 const PORT = 2000;
 const hostname = '127.0.0.1';
-const { login } = require('./post/auth.js');
-const { getGallery } = require('./get/gallery');
+const { login } = require('./post/login.js');
+const { displayGallery } = require('./get/gallery');
 const server = http.createServer((req, res) => {
     if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,7 +14,15 @@ const server = http.createServer((req, res) => {
         res.writeHead(200);
         res.end();
     }
-    else if (req.url === '/authorization' && req.method === 'POST') {
+    else {
+        router(req, res);
+    }
+});
+server.listen(PORT, hostname, () => {
+    console.log(`Listening server: ${hostname}:${PORT}`);
+});
+function router(req, res) {
+    if (req.url === '/authorization' && req.method === 'POST') {
         let body = '';
         req.on('data', (data) => {
             body += data;
@@ -26,7 +34,7 @@ const server = http.createServer((req, res) => {
         });
     }
     else if (/gallery/i.test(`${req.url}`) && req.method === 'GET') {
-        let gallery = getGallery(req);
+        let gallery = displayGallery(req);
         if (gallery.errorMessage) {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.writeHead(401);
@@ -36,8 +44,5 @@ const server = http.createServer((req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.end(JSON.stringify(gallery));
     }
-});
-server.listen(PORT, hostname, () => {
-    console.log(`Listening server: ${hostname}:${PORT}`);
-});
+}
 //# sourceMappingURL=server.js.map

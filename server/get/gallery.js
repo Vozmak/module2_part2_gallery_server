@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const fs = require('fs');
 const querystring = require('querystring');
-function getGallery(req) {
+function displayGallery(req) {
     if (req.headers.authorization === 'token') {
         const total = fs.readdirSync('./server/gallery/img').length.toString();
         const galleryURL = new URL(req.url, 'http://127.0.0.1:2000/');
@@ -25,6 +25,6 @@ function getGallery(req) {
         'errorMessage': 'Unauthorized',
     };
 }
-module.exports.getGallery = getGallery;
+module.exports.displayGallery = displayGallery;
 // Infinity load
 //# sourceMappingURL=gallery.js.map

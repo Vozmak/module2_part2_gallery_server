@@ -26,4 +26,4 @@ function userValidation({ email, password }) {
     return emailRegExp.test(email) ? passRegExp.test(password) : false;
 }
 module.exports.login = login;
-//# sourceMappingURL=auth.js.map
+//# sourceMappingURL=login.js.map
