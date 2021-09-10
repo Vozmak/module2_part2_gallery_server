@@ -17,7 +17,7 @@ function displayGallery(req: any): LoginResponse {
     const galleryURL = new URL(req.url, 'http://127.0.0.1:2000/');
     const page: string = querystring.parse(galleryURL.search.slice(1), '&', '=').page || '1';
 
-    if (Number(page) > total) {
+    if (isNaN(Number(page)) || Number(page) > total ||  Number(page) < 1) {
       return {
         'errorMessage': 'Указаной страницы несуществует',
       };
