@@ -46,4 +46,4 @@ function userValidation({email, password}: User): boolean {
   return emailRegExp.test(email) ? passRegExp.test(password) : false;
 }
 
-module.exports.login = login;
+export { login };

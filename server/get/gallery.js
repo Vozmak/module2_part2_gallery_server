@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.displayGallery = void 0;
 const path = require("path");
 const fs = require('fs');
 const querystring = require('querystring');
@@ -25,6 +26,6 @@ function displayGallery(req) {
         'errorMessage': 'Unauthorized',
     };
 }
-module.exports.displayGallery = displayGallery;
+exports.displayGallery = displayGallery;
 // Infinity load
 //# sourceMappingURL=gallery.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const http = require('http');
+const http = require("http");
+const login_js_1 = require("./post/login.js");
+const gallery_1 = require("./get/gallery");
 const PORT = 2000;
 const hostname = '127.0.0.1';
-const { login } = require('./post/login.js');
-const { displayGallery } = require('./get/gallery');
 const server = http.createServer((req, res) => {
     if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -28,14 +28,14 @@ function router(req, res) {
             body += data;
         });
         req.on('end', () => {
-            let resBody = login(body);
+            let resBody = (0, login_js_1.login)(body);
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.end(JSON.stringify(resBody));
         });
     }
     else if (/gallery/i.test(`${req.url}`) && req.method === 'GET') {
-        let gallery = displayGallery(req);
-        if (gallery.errorMessage) {
+        let gallery = (0, gallery_1.displayGallery)(req);
+        if ("errorMessage" in gallery && gallery.errorMessage) {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.writeHead(401);
             res.end(JSON.stringify(gallery));

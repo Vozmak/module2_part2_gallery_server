@@ -38,6 +38,6 @@ function displayGallery(req: any): LoginResponse {
   };
 }
 
-module.exports.displayGallery = displayGallery;
+export { displayGallery };
 
 // Infinity load

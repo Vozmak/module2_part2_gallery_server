@@ -1,10 +1,11 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
-const http = require('http');
+import * as http from 'http';
+import { login } from './post/login.js';
+import { displayGallery } from './get/gallery';
+
 const PORT: number = 2000;
 const hostname: string = '127.0.0.1';
-const { login } = require('./post/login.js');
-const { displayGallery } = require('./get/gallery');
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
   if (req.method === 'OPTIONS') {
@@ -38,7 +39,7 @@ function router(req: IncomingMessage, res: ServerResponse): void {
     });
   } else if (/gallery/i.test(`${req.url}`) && req.method === 'GET') {
     let gallery = displayGallery(req);
-    if (gallery.errorMessage) {
+    if ("errorMessage" in gallery && gallery.errorMessage) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.writeHead(401);
       res.end(JSON.stringify(gallery));
