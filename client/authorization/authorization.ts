@@ -4,12 +4,16 @@ if (localStorage.timestamp < Date.now()) {
 }
 
 interface User {
-  'email': string;
-  'password': string;
+  email: string;
+  password: string;
 }
 
 interface ErrorMsg {
-  'errorMessage': string;
+  errorMessage: string;
+}
+
+interface Token {
+  token: string;
 }
 
 const form = document.getElementById("authorization") as HTMLFormElement;
@@ -20,11 +24,11 @@ form.addEventListener("submit", async event => {
   const email = form.elements.namedItem('email') as HTMLInputElement;
   const password = form.elements.namedItem('password') as HTMLInputElement;
   const user: User = {
-    "email": email.value,
-    "password": password.value
+    email: email.value,
+    password: password.value
   };
 
-  let result: ErrorMsg | any = await authorizationUser(user);
+  let result: ErrorMsg | Token = await authorizationUser(user);
 
   if ('errorMessage' in result && result.errorMessage) {
     email.value = "";
@@ -39,7 +43,7 @@ form.addEventListener("submit", async event => {
     return alert(result.errorMessage)
   }
 
-  const {token} = result;
+  const {token} = result as Token;
 
   if (!localStorage.token) {
     localStorage.setItem("token", token);
@@ -49,7 +53,7 @@ form.addEventListener("submit", async event => {
   }
 });
 
-async function authorizationUser(user: User): Promise<ErrorMsg | any>  {
+async function authorizationUser(user: User): Promise<ErrorMsg | Token>  {
   let response: Response = await fetch('http://127.0.0.1:2000/authorization', {
     method: "POST",
     headers: {

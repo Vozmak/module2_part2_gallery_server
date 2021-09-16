@@ -11,19 +11,19 @@ function displayGallery(req) {
         const page = querystring.parse(galleryURL.search.slice(1), '&', '=').page || '1';
         if (isNaN(Number(page)) || Number(page) > total || Number(page) < 1) {
             return {
-                'errorMessage': 'Указаной страницы несуществует',
+                errorMessage: 'Указаной страницы несуществует',
             };
         }
         let images = fs.readdirSync(`./server/gallery/img/${page}`)
             .map((img) => path.join(`../../server/gallery/img/${page}`, img));
         return {
-            'objects': images,
-            'page': page,
-            'total': total,
+            objects: images,
+            page: page,
+            total: total,
         };
     }
     return {
-        'errorMessage': 'Unauthorized',
+        errorMessage: 'Unauthorized',
     };
 }
 exports.displayGallery = displayGallery;

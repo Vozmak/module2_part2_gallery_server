@@ -9,8 +9,8 @@ form.addEventListener("submit", async (event) => {
     const email = form.elements.namedItem('email');
     const password = form.elements.namedItem('password');
     const user = {
-        "email": email.value,
-        "password": password.value
+        email: email.value,
+        password: password.value
     };
     let result = await authorizationUser(user);
     if ('errorMessage' in result && result.errorMessage) {

@@ -3,14 +3,14 @@ interface UsersAssecc {
 }
 
 type LoginResponse = {
-  'errorMessage': string;
+  errorMessage: string;
 } | {
-  'token': string
+  token: string
 }
 
 interface User {
-  "email": string;
-  "password": string;
+  email: string;
+  password: string;
 }
 
 const usersAccess: UsersAssecc = {
@@ -24,18 +24,18 @@ function login(body: string): LoginResponse {
 
   if (!userValidation(user)) {
     return {
-      "errorMessage": "Некорректный ввод email или пароль"
+      errorMessage: "Некорректный ввод email или пароль"
     }
   }
 
   if (!usersAccess.hasOwnProperty(user.email) || user.password !== usersAccess[user.email]) {
     return {
-      "errorMessage": "Неверный логин или пароль"
+      errorMessage: "Неверный логин или пароль"
     }
   }
 
   return {
-    "token": "token"
+    token: "token"
   }
 }
 

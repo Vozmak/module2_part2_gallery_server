@@ -10,16 +10,16 @@ function login(body) {
     const user = JSON.parse(body);
     if (!userValidation(user)) {
         return {
-            "errorMessage": "Некорректный ввод email или пароль"
+            errorMessage: "Некорректный ввод email или пароль"
         };
     }
     if (!usersAccess.hasOwnProperty(user.email) || user.password !== usersAccess[user.email]) {
         return {
-            "errorMessage": "Неверный логин или пароль"
+            errorMessage: "Неверный логин или пароль"
         };
     }
     return {
-        "token": "token"
+        token: "token"
     };
 }
 exports.login = login;

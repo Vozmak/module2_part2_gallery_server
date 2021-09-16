@@ -4,11 +4,11 @@ const fs = require('fs');
 const querystring = require('querystring');
 
 type LoginResponse = {
-  'errorMessage': string;
+  errorMessage: string;
 } | {
-  'objects': Array<string>;
-  'page': string;
-  'total': number
+  objects: Array<string>;
+  page: string;
+  total: number;
 }
 
 function displayGallery(req: any): LoginResponse {
@@ -19,7 +19,7 @@ function displayGallery(req: any): LoginResponse {
 
     if (isNaN(Number(page)) || Number(page) > total ||  Number(page) < 1) {
       return {
-        'errorMessage': 'Указаной страницы несуществует',
+        errorMessage: 'Указаной страницы несуществует',
       };
     }
 
@@ -27,14 +27,14 @@ function displayGallery(req: any): LoginResponse {
       .map((img: string) => path.join(`../../server/gallery/img/${page}`, img));
 
     return {
-      'objects': images,
-      'page': page,
-      'total': total,
+      objects: images,
+      page: page,
+      total: total,
     };
   }
 
   return {
-    'errorMessage': 'Unauthorized',
+    errorMessage: 'Unauthorized',
   };
 }
 
