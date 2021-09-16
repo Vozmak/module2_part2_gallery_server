@@ -26,6 +26,6 @@ exports.login = login;
 function userValidation({ email, password }) {
     const emailRegExp = /^[a-z\d]+@[a-z]+\.[a-z]+$/i;
     const passRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z\d]{8}$/;
-    return emailRegExp.test(email) ? passRegExp.test(password) : false;
+    return emailRegExp.test(email) && passRegExp.test(password);
 }
 //# sourceMappingURL=login.js.map
