@@ -16,7 +16,9 @@ const server = http.createServer((req: IncomingMessage, res: ServerResponse) => 
     res.writeHead(200);
     res.end();
   } else {
-    router(req, res);
+    router(req, res).catch(err => {
+      console.log(err);
+    });
   }
 });
 
@@ -24,7 +26,7 @@ server.listen(PORT, hostname, () => {
   console.log(`Listening server: ${hostname}:${PORT}`);
 });
 
-function router(req: IncomingMessage, res: ServerResponse): void {
+async function router(req: IncomingMessage, res: ServerResponse): Promise<void> {
   if (req.url === '/authorization' && req.method === 'POST') {
     let body: string = '';
 
@@ -38,7 +40,7 @@ function router(req: IncomingMessage, res: ServerResponse): void {
       res.end(JSON.stringify(resBody));
     });
   } else if (/gallery/i.test(`${req.url}`) && req.method === 'GET') {
-    let gallery = displayGallery(req);
+    let gallery = await displayGallery(req);
     if ("errorMessage" in gallery && gallery.errorMessage) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.writeHead(401);
@@ -47,5 +49,7 @@ function router(req: IncomingMessage, res: ServerResponse): void {
     }
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.end(JSON.stringify(gallery));
+  } else {
+    res.writeHead(404)
   }
 }
